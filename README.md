@@ -32,16 +32,15 @@ vosk-realtime-transcription/
 ├── venv/                 # Virtual environment
 └── requirements.txt      # Python dependencies
 ```
+## Installation
 
-### Installation
-
-# 1. Clone or Create Project Directory
+1. Clone or Create Project Directory
 ```bash
 mkdir -p vosk_realtime_transcription
 cd vosk_realtime_transcription
 mkdir -p templates
 ```
-# 2. Create Virtual Environment
+2. Create Virtual Environment
 Create and activate virtual environment
 
 note: this will take a few seconds to terminate the vertuial enviroment use deactivate
@@ -50,8 +49,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-
-# 3. Install Dependencies
+3. Install Dependencies
 
 Install packages:
 ```bash
@@ -60,50 +58,64 @@ pip install Flask==3.0.0
 pip install flask-sock==0.7.0
 pip install vosk==0.3.45
 ```
-# 4. Download Vosk Model
+4. Download Vosk Model
 
-Install required tools
+4.1 Install required tool
 ```bash
 sudo apt install wget unzip -y
 ```
 
-# 5. Download English model (40MB)
+4.2 Download English model (40MB)
 ```bash
 wget https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
 ```
-Extract, rename, and remove
+4.3 Extract, rename, and remove
 ```bash
 unzip vosk-model-small-en-us-0.15.zip
 mv vosk-model-small-en-us-0.15 model
 rm vosk-model-small-en-us-0.15.zip
 ```
 
-# 6. Generate SSL Certificates
+5. Generate SSL Certificates
 ```bash
-bashopenssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
-When prompted, you can skip most fields by pressing Enter. For "Common Name", enter your server's IP address or localhost.
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
 ```
+When prompted, you can skip most fields by **Pressing Enter.** 
 
-# 7. Create Application Files
+For "Common Name", enter your server's IP address or localhost.
+
+6. Create Application Files
 Download and save tha application file as app.py
 
-### Usage
-
-# 1. Find Your Server's IP Address
 ```bash
-bashhostname -I | awk '{print $1}'
+touch app.py
 ```
-# 2. Start the Application
+```bash
+nano app.py
+```
+- paste code
+- press ctrl -x
+- press Y
+- press Enter
+
+  
+## Usage
+
+1. Find Your Server's IP Address
+```bash
+hostname -I | awk '{print $1}'
+```
+2. Start the Application
    
-# 3. Activate virtual environment
+Activate virtual environment
 ```bash
 source venv/bin/activate
 ```
-# 4. Run the application
+Run the application
 ```python
 python app.py
 ```
-# 3. Access the Application
+3. Access the Application
 ```
 From the same computer:
 https://localhost:5000
@@ -112,42 +124,42 @@ https://YOUR_IP_ADDRESS:5000
 Example: https://192.168.1.100:5000
 ⚠️ Note: You'll see a security warning due to the self-signed certificate. Click "Advanced" and "Proceed" to continue (safe for local development).
 ```
-### Useful Commands
+## Useful Commands
 
 Virtual Environment Activate
 ```bash
 source venv/bin/activate
 ```
-# Deactivate
+Deactivate
 ```bash
 deactivate
 ```
 
-# List installed packages
+List installed packages
 ```bash
 pip list
 ```
-# Process Management
+Process Management
 Find running Python processes
 ```bash
 ps aux | grep python
 ```
-# Kill process by PID
+Kill process by PID
 ```bash
 kill <PID>
 ```
-# Check if port 5000 is in use
+Check if port 5000 is in use
 ```bash
 sudo lsof -i :5000
 ```
-# Network
+Network
 
 Check server is accessible
 ```bash
 curl -k https://localhost:5000
 ```
 
-# View all network connections
+View all network connections
 ```bash
 sudo netstat -tuln
 ```
@@ -158,7 +170,7 @@ Find what's using the port
 ```bash
 sudo lsof -i :5000
 ```
-# Kill the process
+Kill the process
 ```bash
 sudo kill -9 <PID>
 ```
@@ -168,7 +180,7 @@ Verify model directory
 ls -la model/
 ```
 
-# Re-download if needed
+Re-download if needed
 ```bash
 rm -rf model/
 wget https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
