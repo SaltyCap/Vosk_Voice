@@ -163,15 +163,17 @@ rm -rf model/
 wget https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
 unzip vosk-model-small-en-us-0.15.zip
 mv vosk-model-small-en-us-0.15 model
+```
 Certificate Errors
-bash# Regenerate certificates
+
+Regenerate certificates
+```bash
 rm cert.pem key.pem
 openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+```
 Stopping the Application
 Press Ctrl+C in the terminal, or:
-bashps aux | grep python
-kill <PID>
-```
+
 
 License
 This project is open source and available under the MIT License.
