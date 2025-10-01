@@ -44,9 +44,9 @@ def audio_socket(ws):
     
     # Define your expected vocabulary/commands
     # Customize this list with the words you actually use
-    vocabulary = '["red", "blue", "green", "yellow", "orange", "purple", "black", "white", "brown", "pink", "gray", "turn on", "turn off", "lights", "light", "volume", "up", "down", "increase", "decrease", "set", "the", "to", "[unk]"]'
+    #vocabulary = '["red", "blue", "green", "yellow", "orange", "purple", "black", "white", "brown", "pink", "gray", "turn on", "turn off", "lights", "light", "volume", "up", "down", "increase", "decrease", "set", "the", "to", "[unk]"]'
     
-    recognizer = vosk.KaldiRecognizer(model, SAMPLE_RATE, vocabulary)
+    recognizer = vosk.KaldiRecognizer(model, SAMPLE_RATE) # add ,vocabulary to use vocabulary settings
     recognizer.SetMaxAlternatives(0)  # Disable alternatives for speed
     recognizer.SetWords(False)  # Disable word timestamps
     recording = False
