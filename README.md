@@ -92,7 +92,6 @@ touch index.html
 nano index.html
 ```
 Paste in HTML code
-- paste code
 - press ctrl -x
 - press Y
 - press Enter
