@@ -97,7 +97,10 @@ Paste in HTML code
 - press Enter
 
 7. Create Application Files
+
 Download and save tha application file as app.py
+
+Do not save app.py in the templates folder
 
 ```bash
 touch app.py
@@ -152,46 +155,7 @@ List installed packages
 ```bash
 pip list
 ```
-Process Management
-Find running Python processes
-```bash
-ps aux | grep python
-```
-Kill process by PID
-```bash
-kill <PID>
-```
-Check if port 5000 is in use
-```bash
-sudo lsof -i :5000
-```
-Network
 
-Check server is accessible
-```bash
-curl -k https://localhost:5000
-```
-
-View all network connections
-```bash
-sudo netstat -tuln
-```
-Troubleshooting
-Port 5000 Already in Use
-
-Find what's using the port
-```bash
-sudo lsof -i :5000
-```
-Kill the process
-```bash
-sudo kill -9 <PID>
-```
-Model Not Loading
-Verify model directory
-```bash
-ls -la model/
-```
 
 Re-download if needed
 ```bash
