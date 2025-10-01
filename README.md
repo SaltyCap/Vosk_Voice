@@ -57,6 +57,7 @@ pip install --upgrade pip
 pip install Flask==3.0.0
 pip install flask-sock==0.7.0
 pip install vosk==0.3.45
+pip install numpy
 ```
 4. Download Vosk Model
 
