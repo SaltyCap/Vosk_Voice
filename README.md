@@ -174,6 +174,10 @@ openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 36
 Stopping the Application
 Press Ctrl+C in the terminal, or:
 
+Optional install vscode
+```bash
+sudo apt install code
+```
 
 License
 This project is open source and available under the MIT License.
