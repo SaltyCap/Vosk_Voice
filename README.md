@@ -84,16 +84,27 @@ When prompted, you can skip most fields by **Pressing Enter.**
 
 For "Common Name", enter your server's IP address or localhost.
 
-6. Create Application Files
+6. Create Templates & HTML file
+```bash
+mkdir -p templates
+cd templates
+touch index.html
+nano index.html
+```
+Paste in HTML code
+- paste code
+- press ctrl -x
+- press Y
+- press Enter
+
+7. Create Application Files
 Download and save tha application file as app.py
 
 ```bash
 touch app.py
-```
-```bash
 nano app.py
 ```
-- paste code
+Paste in Python code
 - press ctrl -x
 - press Y
 - press Enter
@@ -119,10 +130,13 @@ python app.py
 ```
 From the same computer:
 https://localhost:5000
+
 From your phone or another device:
 https://YOUR_IP_ADDRESS:5000
 Example: https://192.168.1.100:5000
-⚠️ Note: You'll see a security warning due to the self-signed certificate. Click "Advanced" and "Proceed" to continue (safe for local development).
+
+⚠️ Note: You'll see a security warning due to the self-signed certificate.
+Click "Advanced" and "Proceed" to continue (safe for local development).
 ```
 ## Useful Commands
 
