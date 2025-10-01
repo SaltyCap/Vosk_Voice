@@ -29,8 +29,7 @@ vosk-realtime-transcription/
 │   └── ...
 ├── templates/
 │   └── index.html        # Frontend HTML file
-├── venv/                 # Virtual environment
-└── requirements.txt      # Python dependencies
+└──venv/                 # Virtual environment
 ```
 ## Installation
 
