@@ -32,10 +32,6 @@ def index():
     """Serves the main HTML page."""
     return render_template('index.html')
 
-@app.route('/joystick')
-def joystick():
-    """Serves the joystick control page."""
-    return render_template('joystick.html')
 
 @sock.route('/audio')
 def audio_socket(ws):
