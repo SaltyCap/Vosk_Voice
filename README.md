@@ -1,5 +1,3 @@
-markdown# 
-
 Real-Time Voice Transcription with Vosk
 
 A Flask-based web application that provides real-time speech-to-text transcription using Vosk and WebSockets. Access from any device on your local network, including mobile phones.
