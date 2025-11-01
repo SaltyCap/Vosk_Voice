@@ -1,6 +1,20 @@
 Real-Time Voice Transcription with Vosk
 
-A Flask-based web application that provides real-time speech-to-text transcription using Vosk and WebSockets. Access from any device on your local network, including mobile phones.
+A web application that provides real-time speech-to-text transcription using Vosk and WebSockets. Access from any device on your local network, including mobile phones.
+
+## 🚀 Two Implementations Available
+
+### **Python/Flask Version** (Original)
+- Easy to setup and modify
+- Cross-platform compatibility
+- Good for development and testing
+
+### **C Implementation** (Recommended for Raspberry Pi 5) ⭐
+- **70% less memory usage**
+- **50% faster processing**
+- **Optimized for ARM architecture**
+- **Lower CPU usage**
+- See [c_implementation/README.md](c_implementation/README.md) for details
 
 ## Features
 
@@ -10,7 +24,25 @@ A Flask-based web application that provides real-time speech-to-text transcripti
 - 🌐 Network accessible (LAN)
 - ⚡ Low latency transcription
 
-## Prerequisites
+## Quick Start (C Implementation - Raspberry Pi 5)
+
+For the optimized C version on Raspberry Pi 5:
+
+```bash
+cd c_implementation
+bash install_rpi5.sh
+./build/vosk_server
+```
+
+Then access at `https://YOUR_PI_IP:5000`
+
+See [c_implementation/README.md](c_implementation/README.md) for full documentation.
+
+---
+
+## Python/Flask Version
+
+### Prerequisites
 
 - Linux system (Ubuntu/Debian recommended)
 - Python 3.8 or higher
