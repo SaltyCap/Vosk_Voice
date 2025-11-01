@@ -5,8 +5,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O2 -Iinclude -D_GNU_SOURCE
 LDFLAGS = -lwebsockets -lvosk -lssl -lcrypto -lpthread -lm
 
-# Raspberry Pi 5 specific optimizations
-RPI5_FLAGS = -march=armv8.2-a -mtune=cortex-a76 -mfpu=neon-fp-armv8
+# Raspberry Pi 5 specific optimizations (ARM64/aarch64)
+RPI5_FLAGS = -march=armv8.2-a+fp+simd -mtune=cortex-a76
 
 # Directories
 SRC_DIR = src

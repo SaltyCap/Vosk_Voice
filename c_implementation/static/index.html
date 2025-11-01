@@ -2,131 +2,361 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Transcription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>🎤 Voice Transcription</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            background: #f0f0f0;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            color: #333;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
         }
 
         .controls {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            margin: 30px 0;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         button {
-            padding: 12px 30px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            padding: 18px 40px;
+            font-size: 18px;
             font-weight: bold;
-            transition: opacity 0.3s;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 140px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:active {
+            transform: scale(0.95);
         }
 
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
         }
 
         #startButton {
-            background: #4CAF50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
+        #startButton:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
         #stopButton {
-            background: #f44336;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
+        }
+
+        #stopButton:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+            transform: translateY(-2px);
+        }
+
+        #clearButton {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            padding: 12px 30px;
+            font-size: 14px;
+            min-width: 100px;
+        }
+
+        #clearButton:hover:not(:disabled) {
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.4);
+            transform: translateY(-2px);
         }
 
         #status {
             text-align: center;
             margin: 20px 0;
-            font-weight: bold;
-            color: #666;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        #status.recording {
+            background: rgba(245, 87, 108, 0.1);
+            color: #f5576c;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        #status.error {
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         #transcript {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            min-height: 150px;
-            font-size: 16px;
-            line-height: 1.5;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+            min-height: 200px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #1f2937;
+            overflow-y: auto;
+            max-height: 400px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #transcript.empty {
+            color: #9ca3af;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .mic-icon {
+            font-size: 50px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1e40af;
+        }
+
+        .info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                padding: 16px 30px;
+                font-size: 16px;
+                min-width: 120px;
+            }
+
+            #transcript {
+                font-size: 16px;
+                padding: 20px;
+                min-height: 150px;
+            }
+
+            .controls {
+                gap: 10px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            #transcript {
+                min-height: 100px;
+                max-height: 150px;
+            }
+
+            .mic-icon {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Voice Transcription</h1>
-    
-    <div class="controls">
-        <button id="startButton">Start</button>
-        <button id="stopButton" disabled>Stop</button>
+    <div class="container">
+        <div class="mic-icon">🎤</div>
+        <h1>Voice Transcription</h1>
+        <p class="subtitle">Powered by Vosk AI - Speak and see your words appear!</p>
+
+        <div class="controls">
+            <button id="startButton">
+                ▶️ Start
+            </button>
+            <button id="stopButton" disabled>
+                ⏹️ Stop
+            </button>
+            <button id="clearButton">
+                🗑️ Clear
+            </button>
+        </div>
+
+        <div id="status">Connecting...</div>
+
+        <div id="transcript" class="empty">
+            Click "Start" and allow microphone access to begin transcription...
+        </div>
+
+        <div class="info">
+            <strong>📱 Instructions:</strong>
+            1. Click the <strong>Start</strong> button<br>
+            2. Allow microphone access when prompted<br>
+            3. Speak clearly into your device<br>
+            4. Watch your words appear in real-time!
+        </div>
+
+        <div class="footer">
+            Raspberry Pi 5 • C Implementation • Real-time AI
+        </div>
     </div>
-    
-    <div id="status">Ready</div>
-    
-    <div id="transcript">Transcribed text will appear here...</div>
 
     <script>
         const startButton = document.getElementById('startButton');
         const stopButton = document.getElementById('stopButton');
+        const clearButton = document.getElementById('clearButton');
         const statusDiv = document.getElementById('status');
         const transcriptDiv = document.getElementById('transcript');
-        
+
         let ws;
         let audioContext;
         let source;
         let processor;
         let finalTranscript = '';
+        let reconnectAttempts = 0;
+        const maxReconnectAttempts = 5;
+
+        // Update status with styling
+        function updateStatus(message, type = 'normal') {
+            statusDiv.textContent = message;
+            statusDiv.className = type;
+        }
 
         // Connect to WebSocket
         function connectWebSocket() {
             const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsUrl = `${wsProtocol}//${window.location.host}/audio`;
-            ws = new WebSocket(wsUrl);
-            ws.binaryType = 'arraybuffer';
 
-            ws.onopen = () => {
-                statusDiv.textContent = 'Ready';
-                startButton.disabled = false;
-            };
+            updateStatus('🔌 Connecting to server...');
 
-            ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                if (data.type === 'partial') {
-                    transcriptDiv.textContent = finalTranscript + data.text;
-                } else if (data.type === 'final') {
-                    finalTranscript += data.text + ' ';
-                    transcriptDiv.textContent = finalTranscript;
-                }
-            };
+            try {
+                ws = new WebSocket(wsUrl);
+                ws.binaryType = 'arraybuffer';
 
-            ws.onclose = () => {
-                statusDiv.textContent = 'Disconnected';
-                startButton.disabled = true;
-                stopButton.disabled = true;
-                cleanup();
-            };
+                ws.onopen = () => {
+                    updateStatus('✅ Ready to record');
+                    startButton.disabled = false;
+                    reconnectAttempts = 0;
+                };
 
-            ws.onerror = (error) => {
-                console.error('WebSocket Error:', error);
-                statusDiv.textContent = 'Connection Error';
-                startButton.disabled = true;
-                stopButton.disabled = true;
-            };
+                ws.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        if (data.type === 'partial') {
+                            transcriptDiv.textContent = finalTranscript + data.text;
+                            transcriptDiv.classList.remove('empty');
+                        } else if (data.type === 'final') {
+                            finalTranscript += data.text + ' ';
+                            transcriptDiv.textContent = finalTranscript;
+                            transcriptDiv.classList.remove('empty');
+                        }
+                    } catch (e) {
+                        console.error('Error parsing message:', e);
+                    }
+                };
+
+                ws.onclose = () => {
+                    updateStatus('❌ Disconnected from server', 'error');
+                    startButton.disabled = true;
+                    stopButton.disabled = true;
+                    cleanup();
+
+                    // Auto-reconnect
+                    if (reconnectAttempts < maxReconnectAttempts) {
+                        reconnectAttempts++;
+                        setTimeout(() => {
+                            updateStatus(`🔄 Reconnecting... (${reconnectAttempts}/${maxReconnectAttempts})`);
+                            connectWebSocket();
+                        }, 2000);
+                    }
+                };
+
+                ws.onerror = (error) => {
+                    console.error('WebSocket Error:', error);
+                    updateStatus('⚠️ Connection error', 'error');
+                };
+            } catch (e) {
+                console.error('Failed to create WebSocket:', e);
+                updateStatus('❌ Failed to connect', 'error');
+            }
         }
 
         // Convert audio to 16-bit PCM
@@ -160,23 +390,29 @@
         // Start recording
         async function startRecording() {
             finalTranscript = '';
-            transcriptDiv.textContent = 'Listening...';
-            
+            transcriptDiv.textContent = '🎙️ Listening... Speak now!';
+            transcriptDiv.classList.remove('empty');
+
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
+                // Request microphone access
+                updateStatus('🎤 Requesting microphone access...');
+
+                const stream = await navigator.mediaDevices.getUserMedia({
                     audio: {
                         sampleRate: 16000,
                         channelCount: 1,
                         echoCancellation: true,
                         noiseSuppression: true,
                         autoGainControl: true
-                    } 
+                    }
                 });
+
+                updateStatus('🔴 Recording...', 'recording');
 
                 audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
                 source = audioContext.createMediaStreamSource(stream);
                 processor = audioContext.createScriptProcessor(2048, 1, 1);
-                
+
                 processor.onaudioprocess = (e) => {
                     if (ws && ws.readyState === WebSocket.OPEN) {
                         const float32Array = e.inputBuffer.getChannelData(0);
@@ -190,13 +426,24 @@
 
                 if (ws && ws.readyState === WebSocket.OPEN) {
                     ws.send('start');
-                    statusDiv.textContent = 'Recording...';
                     startButton.disabled = true;
                     stopButton.disabled = false;
                 }
             } catch (err) {
                 console.error('Error accessing microphone:', err);
-                statusDiv.textContent = `Error: ${err.message}`;
+
+                let errorMessage = '❌ Microphone access denied';
+                if (err.name === 'NotAllowedError') {
+                    errorMessage = '❌ Please allow microphone access';
+                } else if (err.name === 'NotFoundError') {
+                    errorMessage = '❌ No microphone found';
+                } else if (err.name === 'NotSupportedError') {
+                    errorMessage = '❌ HTTPS required for microphone';
+                }
+
+                updateStatus(errorMessage, 'error');
+                transcriptDiv.textContent = `${errorMessage}\n\nMake sure you:\n1. Grant microphone permission\n2. Use HTTPS (not HTTP)\n3. Have a working microphone`;
+                transcriptDiv.classList.add('empty');
             }
         }
 
@@ -206,18 +453,34 @@
             if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.send('stop');
             }
-            statusDiv.textContent = 'Ready';
+            updateStatus('✅ Ready to record');
             startButton.disabled = false;
             stopButton.disabled = true;
+        }
+
+        // Clear transcript
+        function clearTranscript() {
+            finalTranscript = '';
+            transcriptDiv.textContent = 'Click "Start" and allow microphone access to begin transcription...';
+            transcriptDiv.classList.add('empty');
         }
 
         // Event listeners
         startButton.addEventListener('click', startRecording);
         stopButton.addEventListener('click', stopRecording);
+        clearButton.addEventListener('click', clearTranscript);
 
         // Initialize
         startButton.disabled = true;
         connectWebSocket();
+
+        // Prevent accidental page closure while recording
+        window.addEventListener('beforeunload', (e) => {
+            if (!stopButton.disabled) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
     </script>
 </body>
 </html>
