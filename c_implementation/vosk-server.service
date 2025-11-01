@@ -1,0 +1,29 @@
+[Unit]
+Description=Vosk Voice Transcription Server (C Implementation)
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/Vosk_Voice
+ExecStart=/usr/local/bin/vosk_server
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/pi/Vosk_Voice
+
+# Resource limits (adjust as needed)
+MemoryMax=512M
+CPUQuota=80%
+
+[Install]
+WantedBy=multi-user.target
