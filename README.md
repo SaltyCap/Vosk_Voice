@@ -19,19 +19,7 @@ A web application that provides real-time speech-to-text transcription using Vos
 - 🌐 Network accessible (LAN)
 - ⚡ Low latency transcription
 
-## Quick Start (C Implementation - Raspberry Pi 5)
 
-For the optimized C version on Raspberry Pi 5:
-
-```bash
-cd c_implementation
-bash install_rpi5.sh
-./build/vosk_server
-```
-
-Then access at `https://YOUR_PI_IP:5000`
-
-See [c_implementation/README.md](c_implementation/README.md) for full documentation.
 
 ---
 
